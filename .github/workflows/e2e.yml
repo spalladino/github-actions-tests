@@ -42,5 +42,5 @@ jobs:
       run: echo "testing"
 
     - name: Push master to stable
-      run: git push origin master:stable
+      run: git push -f origin master:stable
 
