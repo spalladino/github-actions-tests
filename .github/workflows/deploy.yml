@@ -1,0 +1,16 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+    - stable
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Deploy
+      run: echo "deploying"

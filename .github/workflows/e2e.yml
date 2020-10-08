@@ -1,0 +1,45 @@
+name: Stable
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Run hourly
+
+jobs:
+  e2e-check:
+    name: Check diff between master and stable
+    timeout-minutes: 5
+    outputs:
+      run_job: ${{ steps.check_diff.outputs.run_job }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check changes between master and stable
+        id: check_diff
+        run: |
+          if git diff --quiet origin/master origin/stable
+          then
+            echo "No new changes in master"
+            echo "::set-output name=run_job::false"
+          else
+            echo "New changes in master"
+            echo "::set-output name=run_job::true"
+          fi
+
+  e2e-aws:
+    name: AWS e2e tests
+    runs-on: ubuntu-20.04
+    timeout-minutes: 60
+    needs: e2e-check
+    if: needs.e2e-check.outputs.run_job == 'true'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Test
+      run: echo "testing"
+
+    - name: Push master to stable
+      run: git push origin master:stable
+
