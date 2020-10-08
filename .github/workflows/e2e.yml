@@ -19,7 +19,7 @@ jobs:
       - name: Check changes between master and stable
         id: check_diff
         run: |
-          if git diff --quiet origin/master origin/stable
+          if git fetch origin stable && git diff --quiet origin/master origin/stable
           then
             echo "No new changes in master"
             echo "::set-output name=run_job::false"
