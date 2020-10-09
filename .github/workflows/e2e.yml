@@ -44,3 +44,15 @@ jobs:
     - name: Push master to stable
       run: git push -f origin master:stable
 
+  deploy-stable:
+    name: Deploy to stg
+    runs-on: ubuntu-20.04
+    needs: e2e-aws
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: stable
+
+    - name: Deploy
+      run: echo "deploying"
