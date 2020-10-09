@@ -39,7 +39,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Test
-      run: ./ci-ok.sh
+      run: ./ci-fail.sh
 
     - name: Push master to stable
       run: git push -f origin master:stable
