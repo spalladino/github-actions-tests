@@ -42,7 +42,7 @@ jobs:
       run: ./ci-ok.sh
 
     - name: Push master to stable
-      run: git push -f origin master:stable
+      run: git fetch --unshallow origin || git push -f origin master:stable
 
   deploy-stable:
     name: Deploy to stg
