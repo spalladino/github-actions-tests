@@ -2,15 +2,44 @@ name: Issue submitted
 
 on:
   issues:
-    types: [opened, edited, milestoned]
+    types: [opened]
 
 jobs:
   create-pr:
     name: Create new PR
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: |
         echo "$GITHUB_CONTEXT"
+    - name: Add entry to file.txt
+      run: |
+        echo "${{ github.event.issue.id }}" >> file.txt
+    # - name: Push to new branch
+    #   run: |
+    #     git checkout -b info/issue-${{github.event.issue.id}}
+    #     git add file.txt
+    #     git commit -m "Info"
+    #     git push origin info/issue-${{github.event.issue.id}}
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        # token: ${{ secrets.PAT }}
+        commit-message: Update file
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        signoff: false
+        branch: info/issue-${{github.event.issue.id}}
+        delete-branch: true
+        title: '[Info] Update data from ${{github.event.issue.id}}'
+        body: |
+          Update data
+          - See #${{github.event.issue.id}}
+        labels: |
+          info
+        draft: false
+
