@@ -2,7 +2,7 @@ name: Issue submitted
 
 on:
   issues:
-    types: [opened]
+    types: [opened, edited]
 
 jobs:
   create-pr:
@@ -35,10 +35,9 @@ jobs:
         signoff: false
         branch: info/issue-${{github.event.issue.id}}
         delete-branch: true
-        title: '[Info] Update data from ${{github.event.issue.id}}'
+        title: '[Info] Update data from ${{github.event.issue.number}}'
         body: |
-          Update data
-          - See #${{github.event.issue.id}}
+          Fixes #${{github.event.issue.number}}
         labels: |
           info
         draft: false
