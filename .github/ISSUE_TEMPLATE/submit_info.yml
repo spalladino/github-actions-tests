@@ -1,0 +1,44 @@
+name: "Submit info"
+description: "Create or update contracts or project info"
+title: "[Info]: "
+labels: ["update"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hello world
+  - type: input
+    id: project-id
+    attributes:
+      label: ID of the project
+      description: Related project 
+    validations:
+      required: true
+  - type: input
+    id: project-name
+    attributes:
+      label: Name of the project
+      description: Friendly name
+    validations:
+      required: false
+  - type: input
+    id: security-contact
+    attributes:
+      label: Security contact info
+      description: Who to reach out to
+      placeholder: security@example.com
+    validations:
+      required: true
+  - type: dropdown
+    id: chain-id
+    attributes:
+      label: Chain
+      options:
+        - Ethereum Mainnet
+        - Binance
+        - Polygon
+  - type: textarea
+    id: contract-addresses
+    attributes:
+      label: List of addresses
+      render: text
