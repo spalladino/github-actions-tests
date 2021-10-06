@@ -18,7 +18,7 @@ jobs:
         echo "$GITHUB_CONTEXT"
     - name: Add entry to file.txt
       run: |
-        echo "${{ github.event.issue.id }}" >> file.txt
+        echo "$(date) ${{ github.event.issue.id }}" >> file.txt
     # - name: Push to new branch
     #   run: |
     #     git checkout -b info/issue-${{github.event.issue.id}}
